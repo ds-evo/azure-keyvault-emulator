@@ -1,0 +1,94 @@
+image: node:8.12.0
+
+### Global configuration: ###
+
+variables:
+  CI_DEBUG_TRACE: "false"
+
+stages:
+  - build
+  - package
+  - publish
+
+.build_template: &build_template
+  script:
+  # Build package
+  - npm install
+  - npm start
+
+  # Should always succeed if it gets here
+  - exit 0
+
+  cache:
+    key: node_modules
+    policy: pull-push
+    paths:
+    - './node_modules'
+  
+  artifacts:
+    expire_in: 1 day
+    when: always
+    paths:
+    - './node_modules' 
+    - './tools'
+    - './lib'
+
+.package_template: &package_template
+  environment: 
+    name: package
+  script:
+  # Create package content
+  - node ./node_modules/@delta-framework/core/tools/setVersion.js
+  - npm pack
+
+  # Should always succeed if it gets here
+  - exit 0
+
+  dependencies:
+  - build
+  artifacts:
+    expire_in: 1 day
+    when: always
+    paths:
+    - ./*.tgz
+
+.publish_template: &publish_template
+  environment: 
+    name: publish
+    url: https://www.npmjs.com/package/@${scope_name}/${package_name}
+  script:
+  # Set authentication token
+  - npm config set //registry.npmjs.org/:_authToken $npm_token
+
+  # Actually push package
+  - node ./node_modules/@delta-framework/core/tools/publish.js
+
+  # Should always succeed if it gets here
+  - exit 0
+
+  dependencies:
+  - build
+  - package
+  artifacts:
+    expire_in: 1 week
+    when: on_success
+    paths:
+    - ./*.tgz
+  
+### Automatic build scripts ###
+build:
+  <<: *build_template
+  stage: build
+
+### Publish ###
+package:
+  <<: *package_template
+  stage: package
+  only:
+    - tags
+
+publish:
+  <<: *publish_template
+  stage: publish
+  only:
+    - tags

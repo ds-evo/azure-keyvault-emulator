@@ -1,0 +1,14 @@
+node_modules/
+npm-debug.log
+tools/**/*.js
+lib/**/*.js
+tst/**/*.js
+tools/**/*.js.map
+lib/**/*.js.map
+tst/**/*.js.map
+tools/**/*.d.ts
+lib/**/*.d.ts
+tst/**/*.d.ts
+.nyc_output
+.pubxml
+.nyc_output

@@ -1,0 +1,7 @@
+{
+    // When enabled, will trim trailing whitespace when you save a file.
+    "editor.renderWhitespace": "boundary",
+    "markdown-preview-enhanced": {
+        "breakOnSingleNewLine": false
+    }
+}

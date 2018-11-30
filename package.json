@@ -1,0 +1,65 @@
+{
+  "version": "0.0.0",
+  "name": "azure-keyvault-emulator",
+  "description": "A utility for synchronizing the limited JavaScripts Date object over multiple time-zones",
+  "main": "index",
+  "types": "./node_modules/@types",
+  "scripts": {
+    "rimraf": "rimraf",
+    "tsc": "tsc",
+    "jshint": "jshint",
+    "tslint": "tslint",
+    "clean": ". ./node_modules/@delta-framework/core/commands/clean",
+    "lint-fix": ". ./node_modules/@delta-framework/core/commands/lint-fix",
+    "lint-throw": ". ./node_modules/@delta-framework/core/commands/lint-throw",
+    "compile-ts": ". ./node_modules/@delta-framework/core/commands/compile-ts",
+    "compile": ". ./node_modules/@delta-framework/core/commands/compile",
+    "unit-test": ". ./node_modules/@delta-framework/core/commands/unit-test",
+    "start": ". ./node_modules/@delta-framework/core/commands/start",
+    "debug": "start"
+  },
+  "keywords": [
+    "timestamp",
+    "azure-keyvault-emulator",
+    "js-timestamp",
+    "date",
+    "datetime",
+    "date-time",
+    "timezone",
+    "time-zone"
+  ],
+  "engines": {
+    "node": "^8.12.0"
+  },
+  "author": {
+    "name": "Marvin Brouwer",
+    "url": "https://gitlab.com/Marvin-Brouwer"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator#readme",
+  "repository": "https://gitlab.comMarvin-Brouwer//azure-keyvault-emulator/tree/master",
+  "logo": {
+    "url": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/raw/master/resource/logo.png?inline=false"
+  },
+  "icon": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/raw/master/resource/logo.png?inline=false",
+  "bugs": {
+    "url": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/issues"
+  },
+  "doc": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Readme.md",
+  "readme": "https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Readme.md",
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "typescript.configFile": "tsconfig.json",
+  "tslint.configFile": "tslint.json",
+  "devDependencies": {
+    "@types/node": "^10.12.0",
+    "jshint": "^2.9.6",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.3"
+  },
+  "dependencies": {
+    "@delta-framework/core": "^2.0.0-alpha.4"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+
+    "target": "esnext",
+    "jsx": "react-native",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "skipLibCheck": true,
+    "lib": [
+      "es2018",
+      "esnext",
+      "esnext.asynciterable",
+      "esnext.array"
+    ],
+
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
+    "listFiles": false,
+    "diagnostics": false,
+    "traceResolution": false,
+
+    "allowSyntheticDefaultImports": false,
+    "downlevelIteration": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": false,
+    "strict": true,
+    "alwaysStrict": true,
+    "strictPropertyInitialization": false,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "noEmitOnError": true,
+
+    "sourceMap": true,
+    "declaration": true,
+
+    "rootDirs": [
+      "./tools",
+      "./src",
+      "./tst"
+    ],
+    
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "./node_modules",
+    ".npm"
+  ],
+  "include": [
+    "index.ts",
+    "./tools/**/*.ts",
+    "./lib/**/*.ts",
+    "./tst/**/*.ts"
+  ],
+  "typeAcquisition": {
+    "enable": true,
+    "exclude": [
+      "./node_modules"
+    ]
+  },
+  "compileOnSave": false,
+  "buildOnSave": false
+}

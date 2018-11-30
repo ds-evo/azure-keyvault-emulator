@@ -1,0 +1,12 @@
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+# Project
+node_modules
+resource
+package-lock.json
+.gitlab-ci.yml
+.gitignore
+.nyc_output
+.vscode
