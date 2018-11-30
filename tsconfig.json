@@ -38,8 +38,7 @@
 
     "rootDirs": [
       "./tools",
-      "./src",
-      "./tst"
+      "./src"
     ],
     
     "typeRoots": [
