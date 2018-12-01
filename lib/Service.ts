@@ -41,6 +41,5 @@ export const listen = (subscribtionName: string, filePath: string) => {
 
 // todo remove temp test method
 (() => {
-    console.log('starting');
     listen('someName', './test.json');
 })();

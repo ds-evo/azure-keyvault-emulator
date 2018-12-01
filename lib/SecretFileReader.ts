@@ -55,7 +55,7 @@ const buildSecretRecordFromBundle = (secretKey: string, secretBundle: SecretBund
     SecretRecord | null => {
 
     if (isNullOrUndefined(secretBundle.value)) {
-        console.warn('todo');
+        console.warn(`Secret '${secretKey}' has no value`);
         return null;
     }
 

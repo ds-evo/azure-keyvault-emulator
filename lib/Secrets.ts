@@ -37,18 +37,19 @@ export const createSubscribtionsRepository = (): SubscribtionsRepository => {
 };
 
 const addMapping = (subscribtionName: string, filePath: string, subscribtions: SubscribtionDictionary): void => {
-    if (isNullOrEmpty(subscribtionName)) {
-        console.error('todo');
+    if (isNullOrEmpty(subscribtionName) || subscribtionName.indexOf(' ') !== -1) {
+        console.error('You need to specify a subscribtionName without spaces');
         return;
     }
+    // todo create filePath validator and also use while reading
     if (isNullOrEmpty(filePath) || !fileSystem.existsSync(filePath)) {
-        console.error('todo');
+        console.error('You need to specify a valid filePath');
         return;
     }
 
     const folderStat = fileSystem.lstatSync(filePath);
     if (!folderStat.isFile() || !filePath.endsWith('.json')) {
-        console.error('todo');
+        console.error('You need to specify a file ending with .json');
         return;
     }
 
@@ -58,24 +59,25 @@ const addMapping = (subscribtionName: string, filePath: string, subscribtions: S
 const getSecret = (subscribtionName: string, secretKey: string, subscribtions: SubscribtionDictionary):
     SecretBundle | null => {
 
-    if (isNullOrEmpty(subscribtionName)) {
-        console.error('todo');
+    if (isNullOrEmpty(subscribtionName) || subscribtionName.indexOf(' ') !== -1) {
+        console.error('You need to specify a subscribtionName without spaces');
         return null;
     }
-    if (isNullOrEmpty(secretKey)) {
-        console.error('todo');
+    if (isNullOrEmpty(secretKey) || secretKey.indexOf(' ') !== -1) {
+        console.error('You need to specify a secretKey without spaces');
         return null;
     }
+
     const subscribtion = subscribtions[subscribtionName];
     const secrets = readSecrets(subscribtion);
     if (isNullOrEmpty(subscribtionName)) {
-        console.warn('todo');
+        console.warn(`Couldn't find subscribtion with name '${subscribtionName}'`);
         return null;
     }
-    const secretRecord = secrets
-        .find(secret => secret.key === secretKey);
+
+    const secretRecord = secrets.find(secret => secret.key === secretKey);
     if (isNullOrUndefined(secretRecord)) {
-        console.warn('todo');
+        console.warn(`Couldn't find secret '${secretKey}' in subcsribtion '${subscribtionName}'`);
         return null;
     }
     return secretRecord.secret;
