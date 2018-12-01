@@ -4,6 +4,7 @@ import SecretBundle from './AzureKeyVault/SecretBundle';
 import { isNullOrEmpty, isNullOrUndefined } from '@delta-framework/core';
 
 import { readSecrets } from './SecretFileReader';
+import { validate } from './FileValidator';
 
 /**
  * Closure containing resigtered subsribtions
@@ -41,17 +42,8 @@ const addMapping = (subscribtionName: string, filePath: string, subscribtions: S
         console.error('You need to specify a subscribtionName without spaces');
         return;
     }
-    // todo create filePath validator and also use while reading
-    if (isNullOrEmpty(filePath) || !fileSystem.existsSync(filePath)) {
-        console.error('You need to specify a valid filePath');
-        return;
-    }
 
-    const folderStat = fileSystem.lstatSync(filePath);
-    if (!folderStat.isFile() || !filePath.endsWith('.json')) {
-        console.error('You need to specify a file ending with .json');
-        return;
-    }
+    if (!validate(filePath)) return;
 
     subscribtions[subscribtionName] = filePath;
 };

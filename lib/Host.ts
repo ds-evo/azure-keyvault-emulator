@@ -22,10 +22,14 @@ export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) =>
     });
 
     server.listen(port, (err) => {
-      if (err) return console.error('Something bad happened', err);
+      if (! isNullOrUndefined(err)) {
+          console.error('Something bad happened', err);
+          process.exit(-1);
+      }
 
       console.info('Started Azure KeyVault emulator');
       console.info(`http://localhost:${port}/{subscribtionName}/secret/{secretKey}`);
+      console.log();
     });
 };
 

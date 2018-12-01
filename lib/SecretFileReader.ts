@@ -2,11 +2,14 @@ import SecretBundle from './AzureKeyVault/SecretBundle';
 import SubscribtionFile from './AzureKeyVault/SubscribtionFile';
 
 import { isNullOrUndefined, isString } from '@delta-framework/core';
+import { validate } from './FileValidator';
 
 export type SecretRecord = { key: string, secret: SecretBundle };
 export type Subscribtion = SecretRecord[];
 
 export const readSecrets = (filePath: string): Subscribtion => {
+
+    if (!validate(filePath)) return [];
 
     try {
         // todo convert to jsonreader instead of require
