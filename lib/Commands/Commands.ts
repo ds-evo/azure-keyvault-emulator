@@ -1,4 +1,4 @@
-import { isNullOrUndefined, isNullOrEmpty } from '@delta-framework/core';
+import { isNullOrEmpty } from '@delta-framework/core';
 import { start, stop, restart, listen } from '../Service';
 import { help, docs } from './Help';
 
@@ -21,7 +21,9 @@ import { help, docs } from './Help';
 
     if (command === 'listen') {
         const subscribtionNameArgument = process.argv[3];
+        if (isNullOrEmpty(subscribtionNameArgument)) return help();
         const filePathArgument = process.argv[4];
+        if (isNullOrEmpty(filePathArgument)) return help();
 
         // validation inside
         return listen(subscribtionNameArgument, filePathArgument);
