@@ -6,9 +6,9 @@ import { SubscribtionsRepository } from './Secrets';
 export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) => {
 
     const server = http.createServer((request, response) => {
-      if (isNullOrEmpty(request.url)) return;
+      if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
       console.log(request.url);
-      if (request.url.indexOf('/secret/') === 1) return;
+      if (request.url.indexOf('/secret/') === -1) return returnResponse(response, 404);
 
       const parts = request.url
         .split('/')
@@ -28,6 +28,10 @@ export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) =>
 };
 
 const returnResponse = (response: http.ServerResponse, status: number, value?: object | null): void => {
+
+  console.info(`Returning response code ${status}`);
+
   response.statusCode = status;
   response.write(isNullOrUndefined(value) ? emptyString : JSON.stringify(value));
+  response.end();
 };
