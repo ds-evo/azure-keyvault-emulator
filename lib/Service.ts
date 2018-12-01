@@ -40,6 +40,6 @@ export const listen = (subscribtionName: string, filePath: string) => {
 // todo maybe unlisten?
 
 // todo remove temp test method
-(() => {
-    listen('someName', './test.json');
-})();
+// (() => {
+//     listen('someName', './test.json');
+// })();
