@@ -40,8 +40,7 @@ export const listen = (subscribtionName: string, filePath: string) => {
 // todo maybe unlisten?
 
 // todo remove temp test method
-// tslint:disable-next-line:no-unused-expression
 (() => {
+    console.log('starting');
     listen('someName', './test.json');
-    subscribtions.getSecret('someName', 'someSecret');
-});
+})();
