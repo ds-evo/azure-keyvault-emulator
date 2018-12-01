@@ -1,7 +1,9 @@
 import SecretBundle from './AzureKeyVault/SecretBundle';
 import SubscribtionFile from './AzureKeyVault/SubscribtionFile';
 
-import { isNullOrUndefined, isString } from '@delta-framework/core';
+import * as fileSystem from 'fs';
+
+import { isNullOrUndefined, isString, isNullOrEmpty, isObject } from '@delta-framework/core';
 import { validate } from './FileValidator';
 
 export type SecretRecord = { key: string, secret: SecretBundle };
@@ -12,9 +14,16 @@ export const readSecrets = (filePath: string): Subscribtion => {
     if (!validate(filePath)) return [];
 
     try {
-        // todo convert to jsonreader instead of require
-        const subscribtion = require(filePath);
-        if (isNullOrUndefined(subscribtion)) return [];
+        const jsonFileContent = fileSystem.readFileSync(filePath, 'utf8');
+        if (isNullOrEmpty(jsonFileContent)) {
+            console.warn(`The file '${filePath}' is empty`);
+            return [];
+        }
+        const subscribtion = JSON.parse(jsonFileContent) as SubscribtionFile;
+        if (isNullOrUndefined(subscribtion) || subscribtion === {}) {
+            console.warn(`The file '${filePath}' has no secrets`);
+            return [];
+        }
 
         const secrets = parseSubscribtion(subscribtion);
 
@@ -45,11 +54,20 @@ const buildSecretRecordFromString = (secretKey: string, secretValue: string): Se
 const mapSecretBundleToRecord = (secretKey: string, subscribtion: SubscribtionFile):
     SecretRecord | null => {
 
+        if (!subscribtion.hasOwnProperty(secretKey)) return null;
         const secretBundle = subscribtion[secretKey];
-        if (isNullOrUndefined(secretBundle)) return null;
+        if (isNullOrUndefined(secretBundle))  {
+            console.warn(`Secret '${secretKey}' has no value`);
+            return null;
+        }
 
         if (isString(secretBundle))
             return buildSecretRecordFromString(secretKey, secretBundle);
+
+        if (!isObject(secretBundle)) {
+            console.warn(`Secret '${secretKey}' is neither a string or a SecretBundle`);
+            return null;
+        }
 
        return buildSecretRecordFromBundle(secretKey, secretBundle);
 };

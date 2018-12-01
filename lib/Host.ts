@@ -2,18 +2,20 @@ import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
 import { SubscribtionsRepository } from './Subscribtions';
 
-// todo logging:
 export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) => {
 
     const server = http.createServer((request, response) => {
-      if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
+    if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
       console.log(request.url);
-      if (request.url.indexOf('/secret/') === -1) return returnResponse(response, 404);
 
       const parts = request.url
         .split('/')
-        .filter(isNullOrWhitespace);
-      if (parts[1] !== 'secret') return returnResponse(response, 404);
+        .filter(part => !isNullOrWhitespace(part));
+
+      if (parts[1] !== 'secret') {
+        console.warn('Invalid url requested');
+        return returnResponse(response, 404);
+      }
 
       const secret = subscribtions.getSecret(parts[0], parts[2]);
       if (isNullOrUndefined(secret)) return returnResponse(response, 404);

@@ -8,6 +8,10 @@ export const validate = (filePath: string): boolean => {
         console.error('You need to specify a filePath');
         return false;
     }
+    if (!filePath.endsWith('.json')) {
+        console.error(`Path '${filePath}' is not a .json file`);
+        return false;
+    }
     if (!fileSystem.existsSync(filePath)) {
         console.error(`Path '${filePath}' doesn't exist`);
         return false;
@@ -16,10 +20,6 @@ export const validate = (filePath: string): boolean => {
     const fileStatus = fileSystem.lstatSync(filePath);
     if (!fileStatus.isFile()) {
         console.error(`Path '${filePath}' is not a file`);
-        return false;
-    }
-    if (!filePath.endsWith('.json')) {
-        console.error(`Path '${filePath}' is not a .json file`);
         return false;
     }
 
