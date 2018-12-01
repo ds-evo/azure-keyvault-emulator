@@ -52,7 +52,7 @@
     "no-consecutive-blank-lines": [
       true
     ],
-    "no-console": [ true ],
+    "no-console": [ false ],
     "no-construct": false,
     "no-parameter-properties": true,
     "no-debugger": true,

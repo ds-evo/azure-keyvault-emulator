@@ -1,17 +1,12 @@
 
+/**
+ * Model for azure SecretBundles
+ */
 export type SecretBundle = {
-    id: string,
-    value: any,
+    id?: string,
+    value: string,
     contentType?: string
     managed?: boolean
-};
-
-export type SecretDictionary = {
-    [key: string]: SecretBundle
-};
-
-export type SubscribtionDictionary = {
-    [key: string]: SecretDictionary[]
 };
 
 export default SecretBundle;

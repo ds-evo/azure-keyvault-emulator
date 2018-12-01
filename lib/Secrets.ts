@@ -1,29 +1,47 @@
 import * as fileSystem from 'fs';
 
-import { SecretBundle, SecretDictionary, SubscribtionDictionary } from './AzureKeyVault/SecretBundle';
-import { isNullOrEmpty, isNullOrUndefined} from '@delta-framework/core';
+import SecretBundle from './AzureKeyVault/SecretBundle';
+import { isNullOrEmpty, isNullOrUndefined } from '@delta-framework/core';
 
+import { readSecrets } from './SecretFileReader';
+
+/**
+ * Closure containing resigtered subsribtions
+ */
 export type SubscribtionsRepository = {
+    /**
+     * Add a mapping to listen to a subscribtion .json file
+     */
     addListenerMapping: (name: string, filePath: string) => void,
-    getSecrets: (subscribtionName: string) => SecretDictionary[]
+    /**
+     * Retreive a secret parsed from a subscribtion
+     */
+    getSecret: (subscribtionName: string, secretKey: string) => SecretBundle | null
 };
 
-export const createSecretsRepository = (): SubscribtionsRepository => {
-    
+type SubscribtionDictionary = {
+    [key: string]: string
+};
+
+/**
+ * Create a @see SubscribtionsRepository
+ */
+export const createSubscribtionsRepository = (): SubscribtionsRepository => {
+
     const subscribtions: SubscribtionDictionary = { };
 
     return {
         addListenerMapping: (subscribtionName, filePath) => addMapping(subscribtionName, filePath, subscribtions),
-        getSecrets: (subscribtionName) => getSecrets(subscribtionName, subscribtions)
+        getSecret: (subscribtionName, secretKey) => getSecret(subscribtionName, secretKey, subscribtions)
     };
 };
 
 const addMapping = (subscribtionName: string, filePath: string, subscribtions: SubscribtionDictionary): void => {
-    if(isNullOrEmpty(subscribtionName)) {
+    if (isNullOrEmpty(subscribtionName)) {
         console.error('todo');
         return;
     }
-    if(isNullOrEmpty(filePath) || !fileSystem.existsSync(filePath)) {
+    if (isNullOrEmpty(filePath) || !fileSystem.existsSync(filePath)) {
         console.error('todo');
         return;
     }
@@ -34,48 +52,31 @@ const addMapping = (subscribtionName: string, filePath: string, subscribtions: S
         return;
     }
 
-    const secrets = readSecrets(filePath);
-    subscribtions[subscribtionName] = secrets;
+    subscribtions[subscribtionName] = filePath;
 };
 
-// todo convert to jsonreader instead of require
-const readSecrets = (filePath: string): SecretDictionary[] => {
+const getSecret = (subscribtionName: string, secretKey: string, subscribtions: SubscribtionDictionary):
+    SecretBundle | null => {
 
-    try{
-        const secret = require(filePath);
-        if(isNullOrUndefined(secret)) return [];
-
-        const secretsExpanded = <SecretDictionary[]>Object.keys(secret)
-            .map(key => {
-                
-                const secretBundle: SecretBundle = secret[key];
-                if (isNullOrEmpty(secretBundle.id)) {
-                    console.warn('todo');
-                    return null;
-                }
-                if (isNullOrUndefined(secretBundle.value)) {
-                    console.warn('todo');
-                    return null;
-                }
-
-                return { 
-                    [key]: {
-                        id: secretBundle.id,
-                        value: secretBundle.value,
-                        contentType: secretBundle.contentType,
-                        managed: secretBundle.managed || false
-                    } 
-                };
-            })
-            .filter(secretBundle => secretBundle != null);
-
-        return secretsExpanded;
+    if (isNullOrEmpty(subscribtionName)) {
+        console.error('todo');
+        return null;
     }
-    catch (ex){
-        console.error(ex);
-        return [];
+    if (isNullOrEmpty(secretKey)) {
+        console.error('todo');
+        return null;
     }
-}
-
-const getSecrets = (subscribtionName: string, storedSecrets: SubscribtionDictionary): 
-    SecretDictionary[] => storedSecrets[subscribtionName];
+    const subscribtion = subscribtions[subscribtionName];
+    const secrets = readSecrets(subscribtion);
+    if (isNullOrEmpty(subscribtionName)) {
+        console.warn('todo');
+        return null;
+    }
+    const secretRecord = secrets
+        .find(secret => secret.key === secretKey);
+    if (isNullOrUndefined(secretRecord)) {
+        console.warn('todo');
+        return null;
+    }
+    return secretRecord.secret;
+};

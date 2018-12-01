@@ -14,7 +14,6 @@
     "lint-throw": ". ./node_modules/@delta-framework/core/commands/lint-throw",
     "compile-ts": ". ./node_modules/@delta-framework/core/commands/compile-ts",
     "compile": ". ./node_modules/@delta-framework/core/commands/compile",
-    "unit-test": ". ./node_modules/@delta-framework/core/commands/unit-test",
     "start": ". ./node_modules/@delta-framework/core/commands/start",
     "debug": "start"
   },
