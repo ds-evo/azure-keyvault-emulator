@@ -1,4 +1,4 @@
-import { createSubscribtionsRepository } from './Secrets';
+import { createSubscribtionsRepository } from './Subscribtions';
 import { runHost } from './Host';
 // todo host via https://github.com/unitech/pm2
 

@@ -1,6 +1,6 @@
 import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
-import { SubscribtionsRepository } from './Secrets';
+import { SubscribtionsRepository } from './Subscribtions';
 
 // todo logging:
 export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) => {
