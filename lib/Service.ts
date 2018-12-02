@@ -1,16 +1,18 @@
-import { createSubscribtionsRepository } from './Subscribtions';
+import { getSubscribtionsRepository } from './Subscribtions';
 import { runHost } from './Host';
 
-const subscribtions = createSubscribtionsRepository();
+export const hostService = async (portNumber?: number) => {
 
-export const hostService = (portNumber?: number) => {
-
-    runHost(subscribtions, portNumber);
+    const subscribtions = await getSubscribtionsRepository();
+    await runHost(subscribtions, portNumber);
 };
 
-export const addListenerMapping = (subscribtionName: string, filePath: string) => {
+export const addListenerMapping = async(subscribtionName: string, filePath: string) => {
 
-    subscribtions.addListenerMapping(subscribtionName, filePath);
+    const subscribtions = await getSubscribtionsRepository();
+    await subscribtions.addListenerMapping(subscribtionName, filePath);
+
+    console.info(`Set subcribtion: '${subscribtionName}' to: '${filePath}'`);
 };
 
 // todo maybe unlisten?

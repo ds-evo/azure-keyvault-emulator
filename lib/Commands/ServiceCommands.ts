@@ -12,10 +12,10 @@ const host = async () => {
     setDaemonName();
     const portArgument = process.argv[3];
 
-    if (isNullOrEmpty(portArgument)) return hostService();
+    if (isNullOrEmpty(portArgument)) return await hostService();
     if (isNaN(+portArgument)) return help();
 
-    return hostService(+portArgument);
+    return await hostService(+portArgument);
 };
 
 const listen = async () => {
@@ -24,8 +24,10 @@ const listen = async () => {
     const filePathArgument = process.argv[4];
     if (isNullOrEmpty(filePathArgument)) return help();
 
-    if (!await daemonRunning()) start();
-    return addListenerMapping(subscribtionNameArgument, filePathArgument);
+    await addListenerMapping(subscribtionNameArgument, filePathArgument);
+
+    // This has to be last because of process.exit
+    if (!await daemonRunning()) return await start();
 };
 
 export const tryServiceCommands = async (command: string): Promise<true | void> => {
