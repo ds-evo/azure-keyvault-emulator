@@ -13,7 +13,7 @@ export const executeCmd = async(command: string, hideOutput = false):
  * @param command command to run
  */
 export const executeInDirectory = (directory: string, command: string, hideOutput = false): Promise<string> => {
-    return new Promise((done, fail) => exec(command, { cwd: directory }, (err, stdout, stderr) => {
+    return new Promise((resolve, reject) => exec(command, { cwd: directory }, (err, stdout, stderr) => {
 
         if (!hideOutput) {
             console.info(command);
@@ -23,6 +23,6 @@ export const executeInDirectory = (directory: string, command: string, hideOutpu
                 console.error(stderr);
         }
 
-        if (!!err) fail(err); else done(stdout.trim());
+        if (!!err) reject(err); else resolve(stdout.trim());
     }));
 };
