@@ -1,8 +1,7 @@
-import * as fileSystem from 'fs';
-
 import { isNullOrEmpty } from '@delta-framework/core';
+import { fileExists, loadStats } from './Abstractions/FileSystem';
 
-export const validate = (filePath: string): boolean => {
+export const validate = async (filePath: string): Promise<boolean> => {
 
     if (isNullOrEmpty(filePath)) {
         console.error('You need to specify a filePath');
@@ -12,12 +11,12 @@ export const validate = (filePath: string): boolean => {
         console.error(`Path '${filePath}' is not a .json file`);
         return false;
     }
-    if (!fileSystem.existsSync(filePath)) {
+    if (!await fileExists(filePath)) {
         console.error(`Path '${filePath}' doesn't exist`);
         return false;
     }
 
-    const fileStatus = fileSystem.lstatSync(filePath);
+    const fileStatus = await loadStats(filePath);
     if (!fileStatus.isFile()) {
         console.error(`Path '${filePath}' is not a file`);
         return false;

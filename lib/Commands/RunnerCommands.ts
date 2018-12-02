@@ -6,13 +6,13 @@ import { daemonRunning, daemonName } from '../Process';
 export const start =  async(forwardArgs= false): Promise<void> => {
 
     if (await daemonRunning()) {
-        console.warn('Azure KeyVault already running');
+        console.warn('Azure KeyVault Emulator already running');
         return;
     }
 
     invokeStart();
 
-    console.info('Started Azure KeyVault');
+    console.info('Started Azure KeyVault Emulator');
 
     // Exit out of exec call
     process.exit(0);
@@ -21,13 +21,13 @@ export const start =  async(forwardArgs= false): Promise<void> => {
 const stop =  async(): Promise<void> => {
 
     if (!await daemonRunning()) {
-        console.warn('Azure KeyVault not running');
+        console.warn('Azure KeyVault Emulator not running');
         return;
     }
 
     await invokeStop();
 
-    console.info('Stopped Azure KeyVault');
+    console.info('Stopped Azure KeyVault Emulator');
 
     // Exit out of exec call
     process.exit(0);
@@ -36,14 +36,14 @@ const stop =  async(): Promise<void> => {
 const restart =  async(): Promise<void> => {
 
     if (!await daemonRunning()) {
-        console.warn('Azure KeyVault not running');
+        console.warn('Azure KeyVault Emulator not running');
         return;
     }
 
     await invokeStop();
     invokeStart();
 
-    console.info('Restarted Azure KeyVault');
+    console.info('Restarted Azure KeyVault Emulator');
 
     // Exit out of exec call
     process.exit(0);

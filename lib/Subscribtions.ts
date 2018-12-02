@@ -78,7 +78,7 @@ const getSecret = async (subscribtionName: string, secretKey: string): Promise<S
 
     const subscribtions: SubscribtionDictionary = await readSubscribtionsFile();
     const subscribtion = subscribtions[subscribtionName];
-    const secrets = readSecrets(subscribtion);
+    const secrets = await readSecrets(subscribtion);
     if (isNullOrEmpty(subscribtionName)) {
         console.warn(`Couldn't find subscribtion with name '${subscribtionName}'`);
         return null;

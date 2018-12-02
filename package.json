@@ -2,7 +2,7 @@
   "version": "0.0.0",
   "name": "azure-keyvault-emulator",
   "description": "A utility for synchronizing the limited JavaScripts Date object over multiple time-zones",
-  "main": "index",
+  "main": "./lib/Commands/Commands",
   "types": "./node_modules/@types",
   "scripts": {
     "rimraf": "rimraf",
@@ -14,8 +14,10 @@
     "lint-throw": ". ./node_modules/@delta-framework/core/commands/lint-throw",
     "compile-ts": ". ./node_modules/@delta-framework/core/commands/compile-ts",
     "compile": ". ./node_modules/@delta-framework/core/commands/compile",
-    "start": ". ./node_modules/@delta-framework/core/commands/start",
-    "debug": "start"
+    "start": ". ./node_modules/@delta-framework/core/commands/start && npm run azure-keyvault-emulator -- start",
+    "stop": "npm run azure-keyvault-emulator -- stop && . ./node_modules/@delta-framework/core/commands/clean",
+    "debug": "start",
+    "azure-keyvault-emulator": "node ./lib/Commands/Commands.js"
   },
   "keywords": [
     "azure-keyvault-emulator"

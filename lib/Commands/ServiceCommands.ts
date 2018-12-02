@@ -6,7 +6,7 @@ import { start } from './RunnerCommands';
 
 const host = async () => {
     if (await daemonRunning()) {
-        console.warn('Azure KeyVault already running');
+        console.warn('Azure KeyVault Emulator already running');
         return;
     }
     setDaemonName();

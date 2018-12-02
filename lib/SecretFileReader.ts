@@ -1,20 +1,19 @@
 import SecretBundle from './AzureKeyVault/SecretBundle';
 import SubscribtionFile from './AzureKeyVault/SubscribtionFile';
 
-import * as fileSystem from 'fs';
-
 import { isNullOrUndefined, isString, isNullOrEmpty, isObject } from '@delta-framework/core';
 import { validate } from './FileValidator';
+import { readFile } from './Abstractions/FileSystem';
 
 export type SecretRecord = { key: string, secret: SecretBundle };
 export type Subscribtion = SecretRecord[];
 
-export const readSecrets = (filePath: string): Subscribtion => {
+export const readSecrets = async (filePath: string): Promise<Subscribtion> => {
 
-    if (!validate(filePath)) return [];
+    if (!await validate(filePath)) return [];
 
     try {
-        const jsonFileContent = fileSystem.readFileSync(filePath, 'utf8');
+        const jsonFileContent = await readFile(filePath);
         if (isNullOrEmpty(jsonFileContent)) {
             console.warn(`The file '${filePath}' is empty`);
             return [];

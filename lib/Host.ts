@@ -2,7 +2,8 @@ import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
 import { SubscribtionsRepository } from './Subscribtions';
 
-export const runHost = async (subscribtions: SubscribtionsRepository, port = 10003) => {
+export const runHost = (subscribtions: SubscribtionsRepository, port = 10003) =>
+  new Promise((resolve, reject) => {
 
     const server = http.createServer(async (request, response) => {
     if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
@@ -24,16 +25,14 @@ export const runHost = async (subscribtions: SubscribtionsRepository, port = 100
     });
 
     server.listen(port, (err) => {
-      if (! isNullOrUndefined(err)) {
-          console.error('Something bad happened', err);
-          process.exit(-1);
-      }
+      if (! isNullOrUndefined(err)) reject(err);
 
-      console.info('Started Azure KeyVault emulator');
+      console.info('Started Azure KeyVault Emulator emulator');
       console.info(`http://localhost:${port}/{subscribtionName}/secret/{secretKey}`);
       console.log();
+      resolve();
     });
-};
+});
 
 const returnResponse = (response: http.ServerResponse, status: number, value?: object | null): void => {
 
