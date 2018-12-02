@@ -33,7 +33,8 @@ A more in depth description of the possible commands.
   
 ## Registration commands  
   
-[subscribtion-file-url]: (https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts)
+[subscribtion-file-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts
+
 | Listen | |  
 | --- | --- |
 | _Example_ | ```azure-keyvault-emulator listen {subscribtionName} {filePath}``` |

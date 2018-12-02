@@ -32,9 +32,12 @@ api-keys with the world.
 To use the module you simply install this npm module globally and run ```azure-keyvault-emulator start```.  
 After you've started the server you can register json files that can be used to fake a subscribtion in Azure.  
   
-[subscribtion-file-url]: (https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts)
+[subscribtion-file-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts
+[joke-url]: https://www.youtube.com/watch?v=6n3pFFPSlW4
+
 You do this by running ```azure-keyvault-emulator listen {subscribtionName} {filePath}```,  
-after you do this the secrets of the file can be read by navigating to "http://localhost:10003/{subscribtionName}/secret/{keyName}". This endpoint will expose a json model like Azure KeyVault does.
+after you do this the secrets of the file can be read by navigating to "[http://localhost:10003/{subscribtionName}/secret/{keyName}][joke-url]".  
+This endpoint will expose a json model like Azure KeyVault does.  
 The filePath has to point to a json file specced according to the [SubscribtionFile][subscribtion-file-url] type definition; basically meaning that it should contain a list of properties pointing to a string or an object.  
 The reference will not be loaded in memory untill every request so you do not need to issue the listen command again after you edit the file.  
 You can however issue the listen command for existing files without consequense so you can add this to your pre-build steps for example.  
