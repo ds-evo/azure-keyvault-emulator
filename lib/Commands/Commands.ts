@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { setProcessName } from '../Process';
 import { tryHelpCommands, help } from './HelpCommands';
 import { tryRunnerCommands } from './RunnerCommands';
