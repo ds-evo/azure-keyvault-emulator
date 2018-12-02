@@ -1,6 +1,6 @@
 import * as open from 'opn';
 
-import { isNullOrEmpty } from '@delta-framework/core';
+import { isNullOrEmpty, isNullOrWhitespace } from '@delta-framework/core';
 
 // tslint:disable:no-var-requires
 // tslint:disable:no-require-imports
@@ -8,8 +8,17 @@ const documentationUrl = require('../../package.json').homepage as string;
 
 export const help = (): void => {
 
-    // todo console help
-    console.info('helptext');
+    const command = process.argv[2];
+
+    console.info(isNullOrWhitespace(command) ?
+        'You did not specify a command!' :
+        `The command '${command}' was not recognized!`);
+    console.info();
+    console.info('Try one of the following commands:');
+    console.info('  \'azure-keyvault-emulator [ start | stop | restart | listen ]\'');
+    console.info();
+    console.info('Or type \'azure-keyvault-emulator docs\' to ' +
+        'open the documentation page in the default browser');
 };
 
 const docs = async (): Promise<void> => {
