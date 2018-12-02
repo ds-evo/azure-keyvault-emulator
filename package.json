@@ -18,14 +18,7 @@
     "debug": "start"
   },
   "keywords": [
-    "timestamp",
-    "azure-keyvault-emulator",
-    "js-timestamp",
-    "date",
-    "datetime",
-    "date-time",
-    "timezone",
-    "time-zone"
+    "azure-keyvault-emulator"
   ],
   "engines": {
     "node": "^8.12.0"
@@ -60,6 +53,7 @@
   },
   "dependencies": {
     "@delta-framework/core": "^2.0.0-alpha.4",
-    "pm2": "^3.2.2"
+    "current-processes": "^0.2.1",
+    "fkill": "^5.3.0"
   }
 }

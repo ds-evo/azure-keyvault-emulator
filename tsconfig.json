@@ -35,10 +35,11 @@
 
     "sourceMap": true,
     "declaration": true,
+    "resolveJsonModule": true,
 
     "rootDirs": [
       "./tools",
-      "./src"
+      "./lib"
     ],
     
     "typeRoots": [
@@ -50,7 +51,6 @@
     ".npm"
   ],
   "include": [
-    "index.ts",
     "./tools/**/*.ts",
     "./lib/**/*.ts",
     "./tst/**/*.ts"
