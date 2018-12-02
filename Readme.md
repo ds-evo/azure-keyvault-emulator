@@ -17,7 +17,7 @@
 [//]: # (Documentation)
   
 ```plaintext
-npm install azure-keyvault-emulator@latest
+npm install -g azure-keyvault-emulator@latest
 ```
   
 ## Summary  
