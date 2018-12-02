@@ -3,7 +3,7 @@
 <div align="center">
   <a  href="https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator#readme" 
       align="center" >
-      <img  width="275" height="275" 
+      <img  width="250" height="150" 
             align="center" alt="azure-keyvault-emulator" title="azure-keyvault-emulator" 
             src="https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/raw/master/resource/banner.png?inline=false" />
   </a>
