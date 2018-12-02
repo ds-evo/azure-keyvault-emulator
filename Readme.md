@@ -22,11 +22,25 @@ npm install -g azure-keyvault-emulator@latest
   
 ## Summary  
   
-Todo  
+A emulation utility for faking the Azure KeyVault.  
+Azure doesn't support you accessing the KeyVault from another AD account then the Vault is hosted,  
+however sometimes you might want that. Or at least host an open source repository without sharing your 
+api-keys with the world.  
   
 ## Usage  
   
-Todo  
+To use the module you simply install this npm module globally and run ```azure-keyvault-emulator start```.  
+After you've started the server you can register json files that can be used to fake a subscribtion in Azure.  
+  
+[subscribtion-file-url]: (https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts)
+You do this by running ```azure-keyvault-emulator listen {subscribtionName} {filePath}```,  
+after you do this the secrets of the file can be read by navigating to "http://localhost:10003/{subscribtionName}/secret/{keyName}". This endpoint will expose a json model like Azure KeyVault does.
+The filePath has to point to a json file specced according to the [SubscribtionFile][subscribtion-file-url] type definition; basically meaning that it should contain a list of properties pointing to a string or an object.  
+The reference will not be loaded in memory untill every request so you do not need to issue the listen command again after you edit the file.  
+You can however issue the listen command for existing files without consequense so you can add this to your pre-build steps for example.  
+  
+[command-reference-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Command%20reference.md
+For a more detailed view of the commands see the [Command reference][command-reference-url].
   
 ## [Contributing][contributing-url]  
 [contributing-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Contributing.md

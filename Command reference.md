@@ -33,13 +33,13 @@ A more in depth description of the possible commands.
   
 ## Registration commands  
   
+[subscribtion-file-url]: (https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts)
 | Listen | |  
 | --- | --- |
 | _Example_ | ```azure-keyvault-emulator listen {subscribtionName} {filePath}``` |
 | _Parameters_ | **subscribtionName**: An aribtrary string used to identify the subscribtion in the url |
-|  | **filePath**: The path to the file used to store secrets. This file has to be a json file of a specific format. |
+|  | **filePath**: The path to the file used to store secrets. This file has to be a json file  specced according to the [SubscribtionFile][subscribtion-file-url] type definition. |
 | _Summary_ | Will register a secrets file for the server to be used |  
-[//]: # (todo link to format documentation)
   
 ## Misc commands  
   
