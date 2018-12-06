@@ -1,5 +1,3 @@
-import * as fkill from 'fkill';
-
 import { isNullOrEmpty, isNullOrUndefined, emptyString, isNullOrWhitespace } from '@delta-framework/core';
 import { get as getProcessInfo } from 'current-processes';
 import { fileExists, writeFile, readFile } from './Abstractions/FileSystem';
@@ -16,7 +14,7 @@ type NodeProcess = {
 export const appName = require('../package.json').name;
 export const daemonName = `${appName}-daemon`;
 
-const processInfoFilePath = `${process.cwd()}/processInfo.pid`;
+const processInfoFilePath = `${process.cwd()}/.pid`;
 
 export const setDaemonName = () => {
     process['name'] = daemonName;
@@ -49,11 +47,10 @@ const listProcesses = (): Promise<NodeProcess[]> => {
     });
 };
 
-export const setProcessId = async (pid: number) => {
+export const setProcessId = async (pid: number | null) =>
     await writeFile(processInfoFilePath, pid == null ?
         emptyString :
         pid.toString());
-};
 
 export const getProcessId = async (): Promise<number | null> => {
 
@@ -86,5 +83,4 @@ export const stopDaemon = async () => {
         stdio: 'pipe',
         windowsHide: true
     });
-
 };

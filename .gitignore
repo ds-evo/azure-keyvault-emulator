@@ -14,4 +14,4 @@ tst/**/*.d.ts
 .nyc_output
 
 subscribtions.json
-processinfo.pid
+.pid
