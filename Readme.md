@@ -35,12 +35,12 @@ After you've started the server you can register json files that can be used to 
 [subscribtion-file-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/lib/AzureKeyVault/SubscribtionFile.ts
 [joke-url]: https://www.youtube.com/watch?v=6n3pFFPSlW4
 
-You do this by running ```azure-keyvault-emulator listen {subscribtionName} {filePath}```,  
+You do this by running ```azure-keyvault-emulator subscribe {subscribtionName} {filePath}```,  
 after you do this the secrets of the file can be read by navigating to "[http://localhost:10003/{subscribtionName}/secret/{keyName}][joke-url]".  
 This endpoint will expose a json model like Azure KeyVault does.  
 The filePath has to point to a json file specced according to the [SubscribtionFile][subscribtion-file-url] type definition; basically meaning that it should contain a list of properties pointing to a string or an object.  
-The reference will not be loaded in memory untill every request so you do not need to issue the listen command again after you edit the file.  
-You can however issue the listen command for existing files without consequense so you can add this to your pre-build steps for example.  
+The reference will not be loaded in memory untill every request so you do not need to issue the subscribe command again after you edit the file.  
+You can however issue the subscribe command for existing files without consequense so you can add this to your pre-build steps for example.  
   
 [command-reference-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Command%20reference.md
 For a more detailed view of the commands see the [Command reference][command-reference-url].
