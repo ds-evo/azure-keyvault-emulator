@@ -55,7 +55,7 @@ export const setProcessId = async (pid: number) => {
         pid.toString());
 };
 
-const getProcessId = async (): Promise<number | null> => {
+export const getProcessId = async (): Promise<number | null> => {
 
     if (!await fileExists(processInfoFilePath)) return null;
 
@@ -72,14 +72,19 @@ export const startDaemon = () => {
         detached: true,
         cwd: process.cwd(),
         shell: true,
-        stdio: 'inherit',
+        stdio: 'pipe',
         windowsHide: true
     });
 };
 
 export const stopDaemon = async () => {
 
-    const pid = getProcessId();
-    if (pid == null) return;
-    await fkill(pid);
+    spawn('node', [`${process.cwd()}/lib/Stop.js`], {
+        detached: true,
+        cwd: process.cwd(),
+        shell: true,
+        stdio: 'pipe',
+        windowsHide: true
+    });
+
 };
