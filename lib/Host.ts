@@ -30,7 +30,6 @@ const runHttpHost = () => new Promise((resolve, reject) => {
     server.listen(portNumber, err => {
         if (! isNullOrUndefined(err)) reject(err);
 
-        console.info('Started Azure KeyVault Emulator emulator');
         console.info(`http://localhost:${portNumber}/{subscribtionName}/secret/{secretKey}`);
         console.log();
         resolve();

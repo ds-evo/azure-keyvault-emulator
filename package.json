@@ -14,8 +14,8 @@
     "lint-throw": ". ./node_modules/@delta-framework/core/commands/lint-throw",
     "compile-ts": ". ./node_modules/@delta-framework/core/commands/compile-ts",
     "compile": ". ./node_modules/@delta-framework/core/commands/compile",
-    "start": ". ./node_modules/@delta-framework/core/commands/start && npm run azure-keyvault-emulator -- start",
-    "stop": "npm run azure-keyvault-emulator -- stop && . ./node_modules/@delta-framework/core/commands/clean",
+    "start": ". ./node_modules/@delta-framework/core/commands/start && npm run azure-keyvault-emulator -- start && echo ''",
+    "stop": "npm run azure-keyvault-emulator -- stop && . ./node_modules/@delta-framework/core/commands/clean && echo ''",
     "debug": "start",
     "azure-keyvault-emulator": "node ./lib/Commands/Commands.js"
   },
