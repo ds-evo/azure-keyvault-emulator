@@ -40,7 +40,13 @@ after you do this the secrets of the file can be read by navigating to "[http://
 This endpoint will expose a json model like Azure KeyVault does.  
 The filePath has to point to a json file specced according to the [SubscribtionFile][subscribtion-file-url] type definition; basically meaning that it should contain a list of properties pointing to a string or an object.  
 The reference will not be loaded in memory untill every request so you do not need to issue the subscribe command again after you edit the file.  
-You can however issue the subscribe command for existing files without consequense so you can add this to your pre-build steps for example.  
+  
+You can issue the subscribe command for existing files without consequense so you can add this to your pre-build steps for example.  
+```xml
+  <Target Name="EmulateKeyVault" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Exec Command="azure-keyvault-emulator subscribe &quot;$(ProjectDir)secrets.json&quot;" />
+  </Target>
+```
   
 [command-reference-url]: https://gitlab.com/Marvin-Brouwer/azure-keyvault-emulator/blob/master/Command%20reference.md
 For a more detailed view of the commands see the [Command reference][command-reference-url].
