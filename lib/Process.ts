@@ -1,8 +1,9 @@
+import * as fkill from 'fkill';
+
 import { isNullOrEmpty, isNullOrUndefined, emptyString, isNullOrWhitespace } from '@delta-framework/core';
 import { get as getProcessInfo } from 'current-processes';
 import { fileExists, writeFile, readFile } from './Abstractions/FileSystem';
 import { spawn } from 'child_process';
-import * as fkill from 'fkill';
 
 type NodeProcess = {
     name: string,
@@ -12,10 +13,8 @@ type NodeProcess = {
 // todo get a replacement for 'current-processes' that supports longer names
 // tslint:disable:no-var-requires
 // tslint:disable:no-require-imports
-const jsonAppName = require('../package.json').name;
-
-export const appName = 'cmd-AkvE';
-export const daemonName = 'daemon-AkvE';
+export const appName = require('../package.json').name;
+export const daemonName = `${appName}-daemon`;
 
 const processInfoFilePath = `${process.cwd()}/processInfo.pid`;
 
