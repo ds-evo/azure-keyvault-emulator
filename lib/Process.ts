@@ -44,8 +44,7 @@ const listProcesses = (): Promise<NodeProcess[]> => {
             }
 
             if (isNullOrUndefined(processes)) resolve([]);
-            else resolve(processes
-                .filter(p => p.name.includes('node') || p.name.includes(appName) || p.name.includes(daemonName)));
+            else resolve(processes);
         });
     });
 };
