@@ -36,6 +36,7 @@ const restart =  async(): Promise<void> => {
     }
 
     await stopDaemon();
+    await new Promise((res) => { setTimeout(() => res(), 200); });
     await startDaemon();
 
     console.info('Restarted Azure KeyVault Emulator');

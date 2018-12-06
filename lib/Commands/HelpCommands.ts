@@ -12,7 +12,7 @@ export const help = (): void => {
 
     console.info(isNullOrWhitespace(command) ?
         'You did not specify a command!' :
-        `The command '${command}' was not recognized!`);
+        `The command '${command}' was not recognized or missing arguments!`);
     console.info();
     console.info('Try one of the following commands:');
     console.info('  \'azure-keyvault-emulator [ start | stop | restart | subscribe ]\'');
