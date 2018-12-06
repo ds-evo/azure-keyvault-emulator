@@ -15,16 +15,20 @@ export const help = (): void => {
         `The command '${command}' was not recognized!`);
     console.info();
     console.info('Try one of the following commands:');
-    console.info('  \'azure-keyvault-emulator [ start | stop | restart | listen ]\'');
+    console.info('  \'azure-keyvault-emulator [ start | stop | restart | subscribe ]\'');
     console.info();
     console.info('Or type \'azure-keyvault-emulator docs\' to ' +
         'open the documentation page in the default browser');
+
+    return process.exit(0);
 };
 
 const docs = async (): Promise<void> => {
 
     console.info('Opening documentation page:', `\n  ${documentationUrl}`);
     await open(documentationUrl);
+
+    return process.exit(0);
 };
 
 export const tryHelpCommands = async (command: string): Promise<true | void> => {

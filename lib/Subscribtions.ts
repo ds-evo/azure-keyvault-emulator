@@ -14,7 +14,7 @@ export type SubscribtionsRepository = {
     /**
      * Add a mapping to listen to a subscribtion .json file
      */
-    addListenerMapping: (name: string, filePath: string) => Promise<void>,
+    addSubscribtion: (name: string, filePath: string) => Promise<void>,
     /**
      * Retreive a secret parsed from a subscribtion
      */
@@ -33,7 +33,7 @@ export const getSubscribtionsRepository = async (): Promise<SubscribtionsReposit
     await ensureSubscribtionsFile();
 
     return {
-        addListenerMapping,
+        addSubscribtion,
         getSecret
     };
 };
@@ -52,7 +52,7 @@ const readSubscribtionsFile = async (): Promise<SubscribtionDictionary> => {
     return JSON.parse(fileContent) as SubscribtionDictionary;
 };
 
-const addListenerMapping = async (subscribtionName: string, filePath: string): Promise<void> => {
+const addSubscribtion = async (subscribtionName: string, filePath: string): Promise<void> => {
     if (isNullOrEmpty(subscribtionName) || subscribtionName.indexOf(' ') !== -1) {
         console.error('You need to specify a subscribtionName without spaces');
         return;

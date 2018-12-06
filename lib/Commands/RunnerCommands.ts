@@ -1,21 +1,17 @@
-import * as fkill from 'fkill';
+import { daemonRunning, startDaemon, stopDaemon } from '../Process';
 
-import { executeCmd } from './ConsoleHelper';
-import { daemonRunning, daemonName } from '../Process';
-
-export const start =  async(forwardArgs= false): Promise<void> => {
+export const start =  async(): Promise<void> => {
 
     if (await daemonRunning()) {
         console.warn('Azure KeyVault Emulator already running');
         return;
     }
 
-    invokeStart();
+    await startDaemon();
 
     console.info('Started Azure KeyVault Emulator');
 
-    // Exit out of exec call
-    process.exit(0);
+    return process.exit(0);
 };
 
 const stop =  async(): Promise<void> => {
@@ -25,12 +21,11 @@ const stop =  async(): Promise<void> => {
         return;
     }
 
-    await invokeStop();
+    await stopDaemon();
 
     console.info('Stopped Azure KeyVault Emulator');
 
-    // Exit out of exec call
-    process.exit(0);
+    return process.exit(0);
 };
 
 const restart =  async(): Promise<void> => {
@@ -40,17 +35,13 @@ const restart =  async(): Promise<void> => {
         return;
     }
 
-    await invokeStop();
-    invokeStart();
+    await stopDaemon();
+    await startDaemon();
 
     console.info('Restarted Azure KeyVault Emulator');
 
-    // Exit out of exec call
-    process.exit(0);
+    return process.exit(0);
 };
-
-const invokeStart = () => executeCmd(`node ${process.argv[1]} host`).catch(console.error);
-const invokeStop = async () => await fkill(daemonName);
 
 export const tryRunnerCommands = async (command: string): Promise<true | void> => {
 
