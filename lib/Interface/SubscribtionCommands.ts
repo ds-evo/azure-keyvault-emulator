@@ -1,12 +1,13 @@
-import { daemonRunning, startDaemon } from '../Process';
+import { daemonRunning } from '../Process';
 import { isNullOrEmpty } from '@delta-framework/core';
 import { help } from './HelpCommands';
 import { getSubscribtionsRepository } from '../Subscribtions';
+import { startEmulator } from '../Emulator';
 
 const subscribe = async () => {
 
     if (!await daemonRunning()) {
-        await startDaemon();
+        await startEmulator();
         console.info('Started Azure KeyVault Emulator');
     }
 

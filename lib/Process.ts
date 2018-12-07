@@ -2,16 +2,16 @@ import { isNullOrEmpty, isNullOrUndefined, emptyString, isNullOrWhitespace } fro
 import { get as getProcessInfo } from 'current-processes';
 import { fileExists, writeFile, readFile } from './Abstractions/FileSystem';
 import { spawn } from 'child_process';
+import * as fkill from 'fkill';
 
 type NodeProcess = {
     name: string,
     pid: number
 };
 
-// todo get a replacement for 'current-processes' that supports longer names
 // tslint:disable:no-var-requires
 // tslint:disable:no-require-imports
-export const appName = require('../package.json').name;
+export const appName = require('../package.json').name as string;
 export const daemonName = `${appName}-daemon`;
 
 const processInfoFilePath = `${process.cwd()}/.pid`;
@@ -63,24 +63,10 @@ export const getProcessId = async (): Promise<number | null> => {
     return +fileContent;
 };
 
-export const startDaemon = () => {
-
-    spawn('node', [`${process.cwd()}/lib/Host.js`], {
-        detached: true,
-        cwd: process.cwd(),
-        shell: true,
-        stdio: 'pipe',
-        windowsHide: true
-    });
-};
-
-export const stopDaemon = async () => {
-
-    spawn('node', [`${process.cwd()}/lib/Stop.js`], {
-        detached: true,
-        cwd: process.cwd(),
-        shell: true,
-        stdio: 'pipe',
-        windowsHide: true
-    });
-};
+export const spawnProcess = (fileName: string) => { spawn('node', [`${process.cwd()}/lib/Commands/${fileName}.js`], {
+    detached: true,
+    cwd: process.cwd(),
+    shell: true,
+    stdio: 'pipe',
+    windowsHide: true
+}); };

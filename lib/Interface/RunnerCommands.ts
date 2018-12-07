@@ -1,4 +1,5 @@
-import { daemonRunning, startDaemon, stopDaemon } from '../Process';
+import { daemonRunning } from '../Process';
+import { startEmulator, stopEmulator } from '../Emulator';
 
 export const start =  async(): Promise<void> => {
 
@@ -7,7 +8,7 @@ export const start =  async(): Promise<void> => {
         return;
     }
 
-    await startDaemon();
+    startEmulator();
 
     console.info('Started Azure KeyVault Emulator');
 
@@ -21,7 +22,7 @@ const stop =  async(): Promise<void> => {
         return;
     }
 
-    await stopDaemon();
+    await stopEmulator();
 
     console.info('Stopped Azure KeyVault Emulator');
 
@@ -35,9 +36,8 @@ const restart =  async(): Promise<void> => {
         return;
     }
 
-    await stopDaemon();
-    await new Promise((res) => { setTimeout(() => res(), 200); });
-    await startDaemon();
+    await stopEmulator();
+    startEmulator();
 
     console.info('Restarted Azure KeyVault Emulator');
 

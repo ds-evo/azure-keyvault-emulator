@@ -1,11 +1,10 @@
 import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
 import { getSubscribtionsRepository } from './Subscribtions';
-import { setDaemonName, setProcessId } from './Process';
 
 const portNumber = 10003;
 
-const runHttpHost = () => new Promise((resolve, reject) => {
+export const hostHttpServer = () => new Promise((resolve, reject) => {
 
     const server = http.createServer(async (request, response) => {
         if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
@@ -44,12 +43,3 @@ const returnResponse = (response: http.ServerResponse, status: number, value?: o
     response.write(isNullOrUndefined(value) ? emptyString : JSON.stringify(value));
     response.end();
 };
-
-const runEmulator = async () => {
-
-    setDaemonName();
-    await setProcessId(process.pid);
-    await runHttpHost();
-};
-
-runEmulator();
