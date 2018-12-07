@@ -1,6 +1,6 @@
 import * as fkill from 'fkill';
 
-import { spawnProcess, setDaemonName, saveProcessId, getProcessId, daemonRunning } from './Process';
+import { spawnProcess, setDaemonName, saveProcess, getProcessId, daemonRunning } from './Process';
 import { hostHttpServer } from './Server';
 
 /** Start the emulator in a background process */
@@ -9,11 +9,11 @@ export const startEmulator = () => { spawnProcess('Start'); };
 export const start = async () => {
 
     setDaemonName();
-    await saveProcessId(process.pid);
+    await saveProcess(process.pid);
     await hostHttpServer();
 
     // Clear the id so startup doesn't need to check running processes
-    await saveProcessId(null);
+    await saveProcess(null);
 };
 
 /** Start the emulator via a background process */
@@ -34,7 +34,7 @@ export const stop = async (force: boolean) => {
     await fkill(pid, { force });
 
     // Clear the id so startup doesn't need to check running processes
-    await saveProcessId(null);
+    await saveProcess(null);
 };
 
 /**

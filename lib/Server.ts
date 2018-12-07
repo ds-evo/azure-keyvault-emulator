@@ -35,7 +35,11 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
 
         console.info(`http://localhost:${portNumber}/{subscribtionName}/secret/{secretKey}`);
         console.log();
-        resolve();
+
+    });
+
+    [ 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
+        process.on(eventType as any, () => resolve());
     });
 });
 

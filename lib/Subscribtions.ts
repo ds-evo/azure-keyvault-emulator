@@ -4,8 +4,10 @@ import { isNullOrEmpty, isNullOrUndefined, isNullOrWhitespace } from '@delta-fra
 import { readSecrets } from './SecretFileReader';
 import { validate } from './FileValidator';
 import { fileExists, writeFile, readFile } from './Abstractions/FileSystem';
+import { packageDir } from './Process';
 
-const mapperFilePath = `${process.cwd()}/subscribtions.json`;
+/** Path of the file where subsribtions are stored */
+const mapperFilePath = `${packageDir}/subscribtions.json`;
 
 /**
  * Closure containing resigtered subsribtions
