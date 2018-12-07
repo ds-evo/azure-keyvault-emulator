@@ -1,18 +1,11 @@
-import { daemonRunning } from '../Process';
 import { isNullOrEmpty } from '@delta-framework/core';
 import { help } from './HelpCommands';
 import { getSubscribtionsRepository } from '../Subscribtions';
-import { startEmulator } from '../Emulator';
 
 /**
  * Add a file to the subscribtions list
  */
 const subscribe = async () => {
-
-    if (!await daemonRunning()) {
-        await startEmulator();
-        console.info('Started Azure KeyVault Emulator');
-    }
 
     // Try to read arguments
     const subscribtionName = process.argv[3];

@@ -98,12 +98,15 @@ export const getProcessId = async (): Promise<number | null> => {
 
 /** Spawn a script in the background, thay have to be placed in the './lib/Commands' directory */
 export const spawnProcess = (fileName: string) => {
-    spawn('node', [`${packageDir}/lib/Commands/${fileName}.js`], {
-        detached: true,
-        cwd: process.cwd(),
-        shell: true,
-        stdio: 'inherit',
-        windowsHide: true
-    });
-    console.log();
+    try {
+        spawn('node', [`${packageDir}/lib/Commands/${fileName}.js`], {
+            detached: true,
+            cwd: process.cwd(),
+            shell: true,
+            stdio: 'pipe',
+            windowsHide: true
+        });
+    } catch (err) {
+        console.error(err);
+    }
 };

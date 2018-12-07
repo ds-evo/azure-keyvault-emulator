@@ -44,12 +44,20 @@ The reference will not be loaded in memory untill every request so you do not ne
   
 You can issue the subscribe command for existing files without consequense so you can add this to your pre-build steps for example.  
 ```xml
-<Target Name="EmulateKeyVault" 
-  BeforeTargets="PreBuildEvent" 
-  Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+<Target 
+    Name="RegisterKeyVaultSecret" 
+    BeforeTargets="PreBuildEvent" 
+    Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 
-  <Exec Command="azure-keyvault-emulator subscribe &quot;$(ProjectName)&quot; &quot;$(ProjectDir)secrets.json&quot;" />
+    <Exec Command="azure-keyvault-emulator subscribe &quot;$(ProjectName)&quot; &quot;$(ProjectDir)secrets.json&quot;" />
+</Target>
 
+<Target 
+    Name="StartKeyVaultEmulator" 
+    BeforeTargets="PostBuildEvent" 
+    Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+
+    <Exec Command="azure-keyvault-emulator start" />
 </Target>
 ```
   

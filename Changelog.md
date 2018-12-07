@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.0.2 (latest)
+## 1.0.3 (latest)
+* Removed unnecessary complexity
+* Removed autostart in subscribe
+
+## 1.0.2
 * Corrected url path
 * Fixed jsonreader error
 

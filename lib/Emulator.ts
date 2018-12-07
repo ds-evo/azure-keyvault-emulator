@@ -11,27 +11,21 @@ export const start = async () => {
     setDaemonName();
     await saveProcess(process.pid);
     await hostHttpServer();
-
-    // Clear the id so startup doesn't need to check running processes
-    await saveProcess(null);
 };
 
 /** Start the emulator via a background process */
 export const stopEmulator = async () => {
 
-    spawnProcess('Stop');
-
-    const killTimeout = setTimeout(async () => { await stop(true); }, 5000);
-    await waitForStop(killTimeout);
+    await stop();
+    await waitForStop();
 };
 /** Stop the emulator and wait untill stopped */
-export const stop = async (force: boolean) => {
+export const stop = async () => {
 
     const pid = await getProcessId();
     if (pid == null) return;
 
-    console.info(`${ force ? 'Killing' : 'Stopping' } process with pid: ${pid}.`);
-    await fkill(pid, { force });
+    await fkill(pid);
 
     // Clear the id so startup doesn't need to check running processes
     await saveProcess(null);
@@ -41,14 +35,10 @@ export const stop = async (force: boolean) => {
  * Wait untill the process is terminated
  * @param timeout Timeout handle to cancel if stopping was succesfull
  */
-const waitForStop = (timeout: NodeJS.Timeout) => new Promise((resolve) =>  setInterval(() =>
+const waitForStop = () => new Promise((resolve) =>  setInterval(() =>
     daemonRunning().then(running => {
 
     if (running) return;
-
-    clearTimeout(timeout);
-    timeout.unref();
-
     resolve();
 
 }), 100));
