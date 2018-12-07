@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.0.4 (latest)
+## 1.0.5 (latest)
+* Added support for queries in the url
+
+## 1.0.4
 * Changed url segment order
 
 ## 1.0.3

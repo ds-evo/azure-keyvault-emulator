@@ -12,15 +12,19 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
 
     const server = http.createServer(async (request, response) => {
         if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
+        if (request.url === 'favico.ico') return returnResponse(response, 404);
             console.log(request.url);
 
-        const parts = request.url
-          .split('/')
-          .filter(part => !isNullOrWhitespace(part));
+        // Make sure it always contains '?'
+        const requestUrl = `${request.url}?`;
+        const parts = requestUrl
+            .substr(0, requestUrl.indexOf('?'))
+            .split('/')
+            .filter(part => !isNullOrWhitespace(part));
 
         if (parts[0] !== 'secrets') {
-          console.warn('Invalid url requested');
-          return returnResponse(response, 404);
+            console.warn('Invalid url requested');
+            return returnResponse(response, 404);
         }
 
         const subscribtions = await getSubscribtionsRepository();

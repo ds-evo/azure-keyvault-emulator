@@ -88,7 +88,7 @@ const getSecret = async (subscribtionName: string, secretKey: string): Promise<S
 
     const secretRecord = secrets.find(secret => secret.key === secretKey);
     if (isNullOrUndefined(secretRecord)) {
-        console.warn(`Couldn't find secret '${secretKey}' in subcsribtion '${subscribtionName}'`);
+        console.warn(`Couldn't find secret '${secretKey}' in subscribtion '${subscribtionName}'`);
         return null;
     }
     return secretRecord.secret;
