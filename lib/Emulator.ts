@@ -1,16 +1,22 @@
 import * as fkill from 'fkill';
 
-import { spawnProcess, setDaemonName, setProcessId, getProcessId, daemonRunning } from './Process';
+import { spawnProcess, setDaemonName, saveProcessId, getProcessId, daemonRunning } from './Process';
 import { hostHttpServer } from './Server';
 
+/** Start the emulator in a background process */
 export const startEmulator = () => { spawnProcess('Start'); };
+/** Start the emulator */
 export const start = async () => {
 
     setDaemonName();
-    await setProcessId(process.pid);
+    await saveProcessId(process.pid);
     await hostHttpServer();
+
+    // Clear the id so startup doesn't need to check running processes
+    await saveProcessId(null);
 };
 
+/** Start the emulator via a background process */
 export const stopEmulator = async () => {
 
     spawnProcess('Stop');
@@ -18,6 +24,7 @@ export const stopEmulator = async () => {
     const killTimeout = setTimeout(async () => { await stop(true); }, 5000);
     await waitForStop(killTimeout);
 };
+/** Stop the emulator and wait untill stopped */
 export const stop = async (force: boolean) => {
 
     const pid = await getProcessId();
@@ -26,9 +33,14 @@ export const stop = async (force: boolean) => {
     console.info(`${ force ? 'Killing' : 'Stopping' } process with pid: ${pid}.`);
     await fkill(pid, { force });
 
-    await setProcessId(null);
+    // Clear the id so startup doesn't need to check running processes
+    await saveProcessId(null);
 };
 
+/**
+ * Wait untill the process is terminated
+ * @param timeout Timeout handle to cancel if stopping was succesfull
+ */
 const waitForStop = (timeout: NodeJS.Timeout) => new Promise((resolve) =>  setInterval(() =>
     daemonRunning().then(running => {
 

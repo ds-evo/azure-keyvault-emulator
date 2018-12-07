@@ -1,7 +1,10 @@
 import { daemonRunning } from '../Process';
 import { startEmulator, stopEmulator } from '../Emulator';
 
-export const start =  async(): Promise<void> => {
+/**
+ * Start the emulator
+ */
+const start =  async(): Promise<void> => {
 
     if (await daemonRunning()) {
         console.warn('Azure KeyVault Emulator already running');
@@ -15,6 +18,9 @@ export const start =  async(): Promise<void> => {
     return process.exit(0);
 };
 
+/**
+ * Stop the emulator
+ */
 const stop =  async(): Promise<void> => {
 
     if (!await daemonRunning()) {
@@ -29,6 +35,9 @@ const stop =  async(): Promise<void> => {
     return process.exit(0);
 };
 
+/**
+ * Restart the emulator
+ */
 const restart =  async(): Promise<void> => {
 
     if (!await daemonRunning()) {
@@ -44,6 +53,10 @@ const restart =  async(): Promise<void> => {
     return process.exit(0);
 };
 
+/**
+ * Try to apply Start/Stop/Restart commands for the given command or continue
+ * @param command
+ */
 export const tryRunnerCommands = async (command: string): Promise<true | void> => {
 
     if (command === 'start') return await start();

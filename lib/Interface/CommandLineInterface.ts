@@ -5,6 +5,9 @@ import { tryHelpCommands, help } from './HelpCommands';
 import { tryRunnerCommands } from './RunnerCommands';
 import { tryListenerCommands } from './SubscribtionCommands';
 
+/**
+ * Handle the string coming in from the cli call
+ */
 const handleCliCommand = async () => {
 
     // Make the process recognizable

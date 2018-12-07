@@ -6,6 +6,9 @@ import { isNullOrEmpty, isNullOrWhitespace } from '@delta-framework/core';
 // tslint:disable:no-require-imports
 const documentationUrl = require('../../package.json').homepage as string;
 
+/**
+ * Show help documentation in console output
+ */
 export const help = (): void => {
 
     const command = process.argv[2];
@@ -23,6 +26,9 @@ export const help = (): void => {
     return process.exit(0);
 };
 
+/**
+ * Open the readme on gitlab in the system default browser
+ */
 const docs = async (): Promise<void> => {
 
     console.info('Opening documentation page:', `\n  ${documentationUrl}`);
@@ -31,6 +37,10 @@ const docs = async (): Promise<void> => {
     return process.exit(0);
 };
 
+/**
+ * Try to apply Help commands for the given command or continue
+ * @param command
+ */
 export const tryHelpCommands = async (command: string): Promise<true | void> => {
 
     if (isNullOrEmpty(command)) return help();

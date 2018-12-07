@@ -2,29 +2,39 @@ import { isNullOrEmpty, isNullOrUndefined, emptyString, isNullOrWhitespace } fro
 import { get as getProcessInfo } from 'current-processes';
 import { fileExists, writeFile, readFile } from './Abstractions/FileSystem';
 import { spawn } from 'child_process';
-import * as fkill from 'fkill';
 
+/**
+ * Type handle for the discovered processes
+ */
 type NodeProcess = {
     name: string,
     pid: number
 };
 
-// tslint:disable:no-var-requires
-// tslint:disable:no-require-imports
-export const appName = require('../package.json').name as string;
-export const daemonName = `${appName}-daemon`;
-
+/**
+ * The file to save the process id to
+ */
 const processInfoFilePath = `${process.cwd()}/.pid`;
 
+// tslint:disable:no-var-requires
+// tslint:disable:no-require-imports
+/** The name of this cli */
+export const appName = require('../package.json').name as string;
+/** The name of the background process */
+export const daemonName = `${appName}-daemon`;
+
+/** Set the process name to indicate this is the Daemon process */
 export const setDaemonName = () => {
     process['name'] = daemonName;
     process.title = daemonName;
 };
+/** Set the process name to the appName */
 export const setProcessName = () => {
     process['name'] = appName;
     process.title = appName;
 };
 
+/** Check if the Daemon is currently running */
 export const daemonRunning = async () => {
 
     const processes = await listProcesses();
@@ -32,6 +42,7 @@ export const daemonRunning = async () => {
     return !isNullOrUndefined(processes.find(p => p.pid === pid));
 };
 
+/** List all the running processes on this machine */
 const listProcesses = (): Promise<NodeProcess[]> => {
     return new Promise((resolve, reject) =>
     {
@@ -47,11 +58,13 @@ const listProcesses = (): Promise<NodeProcess[]> => {
     });
 };
 
-export const setProcessId = async (pid: number | null) =>
+/** Save the process id to disk to prevent multiple instances of the Daemon */
+export const saveProcessId = async (pid: number | null) =>
     await writeFile(processInfoFilePath, pid == null ?
         emptyString :
         pid.toString());
 
+/** Read the Daemon process id */
 export const getProcessId = async (): Promise<number | null> => {
 
     if (!await fileExists(processInfoFilePath)) return null;
@@ -63,10 +76,13 @@ export const getProcessId = async (): Promise<number | null> => {
     return +fileContent;
 };
 
-export const spawnProcess = (fileName: string) => { spawn('node', [`${process.cwd()}/lib/Commands/${fileName}.js`], {
-    detached: true,
-    cwd: process.cwd(),
-    shell: true,
-    stdio: 'pipe',
-    windowsHide: true
-}); };
+/** Spawn a script in the background, thay have to be placed in the './lib/Commands' directory */
+export const spawnProcess = (fileName: string) => { 
+    spawn('node', [`${process.cwd()}/lib/Commands/${fileName}.js`], {
+        detached: true,
+        cwd: process.cwd(),
+        shell: true,
+        stdio: 'pipe',
+        windowsHide: true
+    });
+};

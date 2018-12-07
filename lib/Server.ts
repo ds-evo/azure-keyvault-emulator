@@ -2,8 +2,12 @@ import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
 import { getSubscribtionsRepository } from './Subscribtions';
 
+/** One port higher than the other emulators already present in the SDK from Microsoft */
 const portNumber = 10003;
 
+/**
+ * Host an HttpServer to emulate Azure KeyVault responses
+ */
 export const hostHttpServer = () => new Promise((resolve, reject) => {
 
     const server = http.createServer(async (request, response) => {
@@ -35,6 +39,12 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
     });
 });
 
+/**
+ * Return a http response and end the transaction
+ * @param response Node http.ServerResponse
+ * @param status Status code to use
+ * @param value Response value (converts to json)
+ */
 const returnResponse = (response: http.ServerResponse, status: number, value?: object | null): void => {
 
     console.info(`Returning response code ${status}`);

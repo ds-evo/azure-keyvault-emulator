@@ -1,6 +1,10 @@
 import { isNullOrEmpty } from '@delta-framework/core';
 import { fileExists, loadStats } from './Abstractions/FileSystem';
 
+/**
+ * Validate whether or not the give path refers to an existing json file
+ * @param filePath A path to a file. If a URL is provided, it must use the file: protocol
+ */
 export const validate = async (filePath: string): Promise<boolean> => {
 
     if (isNullOrEmpty(filePath)) {
