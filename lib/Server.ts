@@ -18,13 +18,13 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
           .split('/')
           .filter(part => !isNullOrWhitespace(part));
 
-        if (parts[1] !== 'secrets') {
+        if (parts[0] !== 'secrets') {
           console.warn('Invalid url requested');
           return returnResponse(response, 404);
         }
 
         const subscribtions = await getSubscribtionsRepository();
-        const secret = await subscribtions.getSecret(parts[0], parts[2]);
+        const secret = await subscribtions.getSecret(parts[1], parts[2]);
         if (isNullOrUndefined(secret)) return returnResponse(response, 404);
 
         return returnResponse(response, 200, secret);
@@ -33,7 +33,7 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
     server.listen(portNumber, err => {
         if (! isNullOrUndefined(err)) reject(err);
 
-        console.info(`http://localhost:${portNumber}/{subscribtionName}/secrets/{secretKey}`);
+        console.info(`http://localhost:${portNumber}/secrets/{subscribtionName}/{secretKey}`);
         console.log();
 
     });

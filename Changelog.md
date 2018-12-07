@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.0.3 (latest)
+## 1.0.4 (latest)
+* Changed url segment order
+
+## 1.0.3
 * Removed unnecessary complexity
 * Removed autostart in subscribe
 
