@@ -19,7 +19,8 @@ export const readSecrets = async (filePath: string): Promise<Subscribtion> => {
     if (!await validate(filePath)) return [];
 
     try {
-        const jsonFileContent = await readFile(filePath);
+        const jsonFileContent = (await readFile(filePath)).trim();
+        console.log(jsonFileContent);
         if (isNullOrEmpty(jsonFileContent)) {
             console.warn(`The file '${filePath}' is empty`);
             return [];

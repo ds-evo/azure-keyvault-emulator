@@ -18,7 +18,7 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
           .split('/')
           .filter(part => !isNullOrWhitespace(part));
 
-        if (parts[1] !== 'secret') {
+        if (parts[1] !== 'secrets') {
           console.warn('Invalid url requested');
           return returnResponse(response, 404);
         }
@@ -33,7 +33,7 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
     server.listen(portNumber, err => {
         if (! isNullOrUndefined(err)) reject(err);
 
-        console.info(`http://localhost:${portNumber}/{subscribtionName}/secret/{secretKey}`);
+        console.info(`http://localhost:${portNumber}/{subscribtionName}/secrets/{secretKey}`);
         console.log();
 
     });
