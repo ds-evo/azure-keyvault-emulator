@@ -19,6 +19,7 @@
 ```plaintext
 npm install -g azure-keyvault-emulator@latest
 ```
+<sub>Requires node of version later than 8.12.0</sub>
   
 ## Summary  
   
