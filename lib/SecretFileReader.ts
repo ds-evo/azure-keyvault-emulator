@@ -1,5 +1,5 @@
 import SecretBundle from './AzureKeyVault/SecretBundle';
-import SubscribtionFile from './AzureKeyVault/SubscribtionFile';
+import SubscriptionFile from './AzureKeyVault/SubscriptionFile';
 
 import { isNullOrUndefined, isString, isNullOrEmpty, isObject } from '@delta-framework/core';
 import { validate } from './FileValidator';
@@ -8,13 +8,13 @@ import { readFile } from './Abstractions/FileSystem';
 /** A record of a KeyVault secret entry */
 export type SecretRecord = { key: string, secret: SecretBundle };
 /** A list of secret entries read from a file */
-export type Subscribtion = SecretRecord[];
+export type Subscription = SecretRecord[];
 
 /**
  * Read the secrets from file to memory
  * @param filePath The path to a .json file containing secrets
  */
-export const readSecrets = async (filePath: string): Promise<Subscribtion> => {
+export const readSecrets = async (filePath: string): Promise<Subscription> => {
 
     if (!await validate(filePath)) return [];
 
@@ -24,13 +24,13 @@ export const readSecrets = async (filePath: string): Promise<Subscribtion> => {
             console.warn(`The file '${filePath}' is empty`);
             return [];
         }
-        const subscribtion = JSON.parse(jsonFileContent) as SubscribtionFile;
-        if (isNullOrUndefined(subscribtion) || subscribtion === {}) {
+        const subscription = JSON.parse(jsonFileContent) as SubscriptionFile;
+        if (isNullOrUndefined(subscription) || subscription === {}) {
             console.warn(`The file '${filePath}' has no secrets`);
             return [];
         }
 
-        const secrets = parseSubscribtion(subscribtion);
+        const secrets = parseSubscription(subscription);
 
         return secrets;
     } catch (ex) {
@@ -40,12 +40,12 @@ export const readSecrets = async (filePath: string): Promise<Subscribtion> => {
 };
 
 /**
- * Convert subscribtion file to records
- * @param subscribtion Contents of a .json subscribtion file
+ * Convert subscription file to records
+ * @param subscription Contents of a .json subscription file
  */
-const parseSubscribtion = (subscribtion: SubscribtionFile): Subscribtion =>
-    Object.keys(subscribtion)
-        .map(secretKey => mapSecretBundleToRecord(secretKey, subscribtion))
+const parseSubscription = (subscription: SubscriptionFile): Subscription =>
+    Object.keys(subscription)
+        .map(secretKey => mapSecretBundleToRecord(secretKey, subscription))
         .filter(recordNotNull);
 
 /**
@@ -58,13 +58,13 @@ const recordNotNull = (secretRecord: SecretRecord | null):
 /**
  * Get a Record from the file based on a key if it exists
  * @param secretKey Key of the secret requested
- * @param subscribtion Contents of subsribtion file
+ * @param subscription Contents of subsribtion file
  */
-const mapSecretBundleToRecord = (secretKey: string, subscribtion: SubscribtionFile):
+const mapSecretBundleToRecord = (secretKey: string, subscription: SubscriptionFile):
     SecretRecord | null => {
 
-        if (!subscribtion.hasOwnProperty(secretKey)) return null;
-        const secretBundle = subscribtion[secretKey];
+        if (!subscription.hasOwnProperty(secretKey)) return null;
+        const secretBundle = subscription[secretKey];
         if (isNullOrUndefined(secretBundle))  {
             console.warn(`Secret '${secretKey}' has no value`);
             return null;

@@ -1,6 +1,6 @@
 import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
-import { getSubscribtionsRepository } from './Subscribtions';
+import { getSecret } from './Subscriptions';
 
 /** One port higher than the other emulators already present in the SDK from Microsoft */
 const portNumber = 10003;
@@ -27,8 +27,7 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
             return returnResponse(response, 404);
         }
 
-        const subscribtions = await getSubscribtionsRepository();
-        const secret = await subscribtions.getSecret(parts[1], parts[2]);
+        const secret = await getSecret(parts[1]);
         if (isNullOrUndefined(secret)) return returnResponse(response, 404);
 
         return returnResponse(response, 200, secret);
@@ -37,14 +36,14 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
     server.listen(portNumber, err => {
         if (! isNullOrUndefined(err)) reject(err);
 
-        console.info(`http://localhost:${portNumber}/secrets/{subscribtionName}/{secretKey}`);
+        console.info(`http://localhost:${portNumber}/secrets/{secretKey}`);
         console.log();
 
     });
 
-    [ 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
-        process.on(eventType as any, () => resolve());
-    });
+    // [ 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
+    //     process.on(eventType as any, () => resolve());
+    // });
 });
 
 /**

@@ -3,8 +3,8 @@ import SecretBundle from './SecretBundle';
 /**
  * Model used for reading in subcribtion .json files
  */
-export type SubscribtionFile = {
+export type SubscriptionFile = {
     [key: string]: SecretBundle | string
 };
 
-export default SubscribtionFile;
+export default SubscriptionFile;

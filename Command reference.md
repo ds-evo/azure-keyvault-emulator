@@ -66,22 +66,22 @@ A more in depth description of the possible commands.
   </td></td>
 </table>
   
-## Subscribtion commands  
+## Subscription commands  
   
 <table>
   <tr><th align="left">
-    <code>azure-keyvault-emulator subscribe {subscribtionName} {filePath}</code>
+    <code>azure-keyvault-emulator subscribe {subscriptionName} {filePath}</code>
   </th></tr><tr><td>
     <img src="/resource/table-spacer.gif" width="500" height="1" />
     <ul>
-      <li><strong>subscribtionName</strong>:
+      <li><strong>subscriptionName</strong>:
         An aribtrary string used to<br />
-        identify the subscribtion in the url
+        identify the subscription in the url
       </li>
       <li><strong>filePath</strong>: 
         The path to the file used to store secrets.<br />
         This file has to be a json file specced according to<br />
-        the <a href="lib/AzureKeyVault/SubscribtionFile.ts">SubscribtionFile</a> type definition
+        the <a href="lib/AzureKeyVault/SubscriptionFile.ts">SubscriptionFile</a> type definition
       </li>
     </ul>
     <p>

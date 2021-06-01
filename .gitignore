@@ -13,5 +13,5 @@ tst/**/*.d.ts
 .pubxml
 .nyc_output
 
-subscribtions.json
+subscriptions.json
 .pid
