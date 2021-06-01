@@ -2,7 +2,6 @@ import SecretBundle from './AzureKeyVault/SecretBundle';
 import SubscriptionFile from './AzureKeyVault/SubscriptionFile';
 
 import { isNullOrUndefined, isString, isNullOrEmpty, isObject } from '@delta-framework/core';
-import { validate } from './FileValidator';
 import { readFile } from './Abstractions/FileSystem';
 
 /** A record of a KeyVault secret entry */
@@ -15,9 +14,6 @@ export type Subscription = SecretRecord[];
  * @param filePath The path to a .json file containing secrets
  */
 export const readSecrets = async (filePath: string): Promise<Subscription> => {
-
-    if (!await validate(filePath)) return [];
-
     try {
         const jsonFileContent = (await readFile(filePath)).trim();
         if (isNullOrEmpty(jsonFileContent)) {
@@ -63,7 +59,7 @@ const recordNotNull = (secretRecord: SecretRecord | null):
 const mapSecretBundleToRecord = (secretKey: string, subscription: SubscriptionFile):
     SecretRecord | null => {
 
-        if (!subscription.hasOwnProperty(secretKey)) return null;
+        if (!(secretKey in subscription)) return null;
         const secretBundle = subscription[secretKey];
         if (isNullOrUndefined(secretBundle))  {
             console.warn(`Secret '${secretKey}' has no value`);

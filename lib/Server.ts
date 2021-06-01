@@ -1,6 +1,7 @@
 import * as http from 'http';
 import { isNullOrEmpty, isNullOrWhitespace, isNullOrUndefined, emptyString } from '@delta-framework/core';
 import { getSecret } from './Subscriptions';
+import SecretBundle from './AzureKeyVault/SecretBundle';
 
 /** One port higher than the other emulators already present in the SDK from Microsoft */
 const portNumber = 10003;
@@ -9,11 +10,19 @@ const portNumber = 10003;
  * Host an HttpServer to emulate Azure KeyVault responses
  */
 export const hostHttpServer = () => new Promise((resolve, reject) => {
+    console.log(resolve);
+    console.log(reject);
 
     const server = http.createServer(async (request, response) => {
+        request.on('error', (err) => {
+            // This prints the error message and stack trace to `stderr`.
+            console.error(err.stack);
+            });
+
         if (isNullOrEmpty(request.url)) return returnResponse(response, 404);
         if (request.url === 'favico.ico') return returnResponse(response, 404);
             console.log(request.url);
+
 
         // Make sure it always contains '?'
         const requestUrl = `${request.url}?`;
@@ -33,12 +42,11 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
         return returnResponse(response, 200, secret);
     });
 
-    server.listen(portNumber, err => {
-        if (! isNullOrUndefined(err)) reject(err);
+    
 
+    server.listen(portNumber, () => {
         console.info(`http://localhost:${portNumber}/secrets/{secretKey}`);
         console.log();
-
     });
 
     // [ 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'SIGTERM'].forEach((eventType) => {
@@ -52,8 +60,7 @@ export const hostHttpServer = () => new Promise((resolve, reject) => {
  * @param status Status code to use
  * @param value Response value (converts to json)
  */
-const returnResponse = (response: http.ServerResponse, status: number, value?: object | null): void => {
-
+const returnResponse = (response: http.ServerResponse, status: number, value?: SecretBundle | null): void => {
     console.info(`Returning response code ${status}`);
 
     response.statusCode = status;

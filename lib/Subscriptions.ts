@@ -1,5 +1,5 @@
 import SecretBundle from './AzureKeyVault/SecretBundle';
-import { isNullOrEmpty, isNullOrUndefined, isNullOrWhitespace } from '@delta-framework/core';
+import { isNullOrUndefined } from '@delta-framework/core';
 
 import { readSecrets } from './SecretFileReader';
 

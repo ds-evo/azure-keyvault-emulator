@@ -1,5 +1,7 @@
-node_modules/
 npm-debug.log
+
+node_modules/
+
 tools/**/*.js
 lib/**/*.js
 tst/**/*.js
@@ -13,5 +15,26 @@ tst/**/*.d.ts
 .pubxml
 .nyc_output
 
-subscriptions.json
-.pid
+# Coverage
+coverage
+
+# Transpiled files
+build/
+
+# VS Code
+.vscode
+!.vscode/tasks.js
+
+# JetBrains IDEs
+.idea/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Misc
+.DS_Store
+
+secrets.json

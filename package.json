@@ -5,18 +5,14 @@
   "main": "./lib/main",
   "types": "./node_modules/@types",
   "scripts": {
-    "rimraf": "rimraf",
-    "tsc": "tsc",
-    "jshint": "jshint",
-    "tslint": "tslint",
-    "clean": ". ./node_modules/@delta-framework/core/commands/clean",
-    "lint-fix": ". ./node_modules/@delta-framework/core/commands/lint-fix",
-    "lint-throw": ". ./node_modules/@delta-framework/core/commands/lint-throw",
-    "compile-ts": ". ./node_modules/@delta-framework/core/commands/compile-ts",
-    "compile": ". ./node_modules/@delta-framework/core/commands/compile",
-    "start": ". ./node_modules/@delta-framework/core/commands/start && npm run azure-keyvault-emulator -- start",
-    "stop": "npm run azure-keyvault-emulator -- stop && . ./node_modules/@delta-framework/core/commands/clean",
-    "debug": "start",
+    "clean": "rimraf coverage build tmp",
+    "prebuild": "npm run lint",
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "start": "node ./lib/main.js",
     "azure-keyvault-emulator": "node ./lib/main.js"
   },
   "bin": {
@@ -27,7 +23,7 @@
     "azure-keyvault-emulator"
   ],
   "engines": {
-    "node": "^8.12.0"
+    "node": ">=0.12"
   },
   "author": {
     "name": "Marvin Brouwer",
@@ -49,18 +45,25 @@
     "extends": "eslint-config-synacor"
   },
   "typescript.configFile": "tsconfig.json",
-  "tslint.configFile": "tslint.json",
   "devDependencies": {
-    "@types/node": "^10.12.0",
+    "@types/jest": "~26.0.23",
+    "@types/node": "~14.14.45",
+    "@typescript-eslint/eslint-plugin": "~4.25.0",
+    "@typescript-eslint/parser": "~4.25.0",
+    "eslint": "~7.27.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-plugin-jest": "~24.3.6",
+    "jest": "~27.0.3",
+    "prettier": "~2.3.0",
+    "rimraf": "~3.0.2",
+    "ts-jest": "~27.0.2",
+    "tsutils": "~3.21.0",
+    "typescript": "~4.3.2",
     "jshint": "^2.9.6",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.1.3"
+    "tslint": "^5.11.0"
   },
   "dependencies": {
-    "@delta-framework/core": "^2.0.0-alpha.4",
-    "current-processes": "^0.2.1",
-    "fkill": "^5.3.0",
-    "opn": "^5.4.0"
+    "tslib": "~2.2.0",
+    "@delta-framework/core": "^2.0.0-alpha.4"
   }
 }

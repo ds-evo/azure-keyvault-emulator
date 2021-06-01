@@ -1,66 +1,26 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "isolatedModules": false,
-
-    "target": "esnext",
-    "jsx": "react-native",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
-    "skipLibCheck": true,
-    "lib": [
-      "es2018",
-      "esnext",
-      "esnext.asynciterable",
-      "esnext.array"
-    ],
-
-    "pretty": true,
-    "forceConsistentCasingInFileNames": true,
-    "listFiles": false,
-    "diagnostics": false,
-    "traceResolution": false,
-
-    "allowSyntheticDefaultImports": false,
-    "downlevelIteration": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": false,
-    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "jsx": "react",
     "alwaysStrict": true,
-    "strictPropertyInitialization": false,
-    "removeComments": false,
-    "preserveConstEnums": true,
-    "noEmitOnError": true,
-
     "sourceMap": true,
-    "declaration": true,
-    "resolveJsonModule": true,
-
-    "rootDirs": [
-      "./tools",
-      "./lib"
-    ],
-    
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false
   },
-  "exclude": [
-    "./node_modules",
-    ".npm"
-  ],
   "include": [
-    "./tools/**/*.ts",
-    "./lib/**/*.ts",
-    "./tst/**/*.ts"
-  ],
-  "typeAcquisition": {
-    "enable": true,
-    "exclude": [
-      "./node_modules"
-    ]
-  },
-  "compileOnSave": false,
-  "buildOnSave": false
+    "src/**/*",
+    "__tests__/**/*",
+    "./lib/**/*"
+  ]
 }
